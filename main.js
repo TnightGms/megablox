@@ -7,6 +7,20 @@ if(!users.find(u=>u.username==="admin")){
   localStorage.setItem("megabloxUsers", JSON.stringify(users));
 }
 
+// Juegos precargados
+const preloadedGames = [
+  {name:"Isla Aventura", creator:"admin", blocks:[
+    {x:0,y:0,z:0,color:0xff0000},{x:1,y:0,z:0,color:0x00ff00},{x:0,y:1,z:0,color:0x0000ff}
+  ]},
+  {name:"Ciudad Bloques", creator:"admin", blocks:[
+    {x:0,y:0,z:0,color:0xffff00},{x:1,y:0,z:0,color:0xff00ff},{x:0,y:1,z:1,color:0x00ffff}
+  ]}
+];
+
+if(!localStorage.getItem("megabloxGames")){
+  localStorage.setItem("megabloxGames", JSON.stringify(preloadedGames));
+}
+
 // Login
 function login(){
   const u = username.value;
@@ -28,7 +42,7 @@ function register(){
   alert("Usuario registrado");
 }
 
-// Panel y insignia WebP
+// Mostrar panel + insignia WebP
 function showPanel(user){
   auth.style.display="none";
   panel.style.display="block";
@@ -39,4 +53,26 @@ function showPanel(user){
   userDisplay.innerHTML = `${user.username} (${user.role}) ${badge}`;
 
   if(user.role==="admin" || user.role==="superadmin") adminPanel.style.display="block";
+
+  loadGames();
+}
+
+// Cargar lista de juegos
+function loadGames(){
+  const games = JSON.parse(localStorage.getItem("megabloxGames")) || [];
+  const div = document.getElementById("gameList");
+  div.innerHTML="";
+  games.forEach((g,i)=>{
+    div.innerHTML += `<div class="gameCard">
+      <h3>${g.name}</h3>
+      <p>Creador: ${g.creator}</p>
+      <button onclick="playGame(${i})">Jugar</button>
+    </div>`;
+  });
+}
+
+function playGame(index){
+  const games = JSON.parse(localStorage.getItem("megabloxGames")) || [];
+  localStorage.setItem("currentGame", JSON.stringify(games[index]));
+  window.location="game.html";
 }
