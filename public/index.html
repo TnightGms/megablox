@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MegaBlox</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>MegaBlox</h1>
+
+<div id="auth">
+  <input id="username" placeholder="Usuario">
+  <input id="password" type="password" placeholder="Contraseña">
+  <button onclick="login()">Login</button>
+  <button onclick="register()">Register</button>
+</div>
+
+<div id="panel" style="display:none;">
+  <h2 id="userDisplay"></h2>
+  <button onclick="window.location='game.html'">Entrar al Mundo 3D</button>
+  <div id="adminPanel" style="display:none;">
+    <h3>Panel Admin</h3>
+    <input id="adminId" placeholder="ID usuario">
+    <button onclick="makeAdmin()">Convertir en Admin</button>
+  </div>
+</div>
+
+<script src="main.js"></script>
+<script src="admin.js"></script>
+</body>
+</html>
