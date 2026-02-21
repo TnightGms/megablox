@@ -3,8 +3,7 @@ function loadForum(){
   const div = document.getElementById("messages");
   div.innerHTML="";
   msgs.forEach(m=>{
-    let badge = (m.role==="admin"||m.role==="superadmin") ? 
-                `<img src="assets/AdminICON.webp" width="15">` : "";
+    let badge = (m.role==="admin"||m.role==="superadmin") ? `<img src="assets/AdminICON.webp" width="15">` : "";
     div.innerHTML += `<p><b>${m.user}:</b> ${badge} ${m.text}</p>`;
   });
 }
