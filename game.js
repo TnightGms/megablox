@@ -10,9 +10,15 @@ scene.add(light);
 const grid = new THREE.GridHelper(50,50);
 scene.add(grid);
 
-let blocks = [];
+let blocks = JSON.parse(localStorage.getItem("currentGame"))?.blocks || [];
+blocks.forEach(b=>{
+  const geometry = new THREE.BoxGeometry();
+  const material = new THREE.MeshStandardMaterial({color:b.color});
+  const cube = new THREE.Mesh(geometry, material);
+  cube.position.set(b.x,b.y,b.z);
+  scene.add(cube);
+});
 
-// Crear bloques al click
 document.addEventListener("click", ()=>{
   const geometry = new THREE.BoxGeometry();
   const material = new THREE.MeshStandardMaterial({color: Math.random()*0xffffff});
@@ -25,14 +31,12 @@ document.addEventListener("click", ()=>{
 function animate(){ requestAnimationFrame(animate); renderer.render(scene,camera); }
 animate();
 
-// Guardar mundo
 function saveWorld(){
   const user = JSON.parse(localStorage.getItem("megabloxCurrentUser")).username;
   localStorage.setItem("world_"+user, JSON.stringify(blocks));
   alert("Mundo guardado");
 }
 
-// Cargar mundo
 function loadWorld(){
   const user = JSON.parse(localStorage.getItem("megabloxCurrentUser")).username;
   const saved = JSON.parse(localStorage.getItem("world_"+user)) || [];
